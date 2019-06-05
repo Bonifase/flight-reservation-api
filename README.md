@@ -1,4 +1,4 @@
-[![Build Status][build-shield]]()
+[![Build Status](https://travis-ci.org/Bonifase/flight-reservation-rest-api.svg?branch=develop)](https://travis-ci.org/Bonifase/flight-reservation-rest-api)
 
 <!-- ABOUT THE PROJECT -->
 
