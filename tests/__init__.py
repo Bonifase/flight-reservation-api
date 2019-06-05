@@ -31,10 +31,25 @@ class TestHelper():
         self.base_url = 'http://127.0.0.1:5000'
         self.headers = {'content-type': 'application/json'}
         self.app = app.test_client()
+    
     # Create a new user
-
     def add_user(self, user_data):
         url = self.base_url + '/api/user/register'
         result = self.app.post(url, data=json.dumps(
             user_data), headers=self.headers)
         return result
+    
+    def login_user(self, user_data):
+        url = self.base_url + '/api/user/login'
+        result = self.app.post(url, data=json.dumps(
+            user_data), headers=self.headers)
+        return result
+    
+    #logout a user
+    def logout_user(self, token=None):
+        url = self.base_url + '/api/user/logout'
+        return self.app.post(
+            url,
+            headers={
+                **self.headers,
+                'Authorization': 'Bearer {}'.format(token)})
