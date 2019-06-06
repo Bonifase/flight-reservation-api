@@ -20,7 +20,7 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "postgres://bonifaseorwa:boni1234@localhost:5432/test"
+    SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URI')
     DEBUG = True
 
 
