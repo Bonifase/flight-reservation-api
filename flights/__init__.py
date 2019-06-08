@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.config.from_object(app_config["development"])
 db = SQLAlchemy(app)
 
+from flights.views.flights import *  # noqa
 from flights.views.user import *  # noqa
 
 app.config['JWT_SECRET_KEY'] = 'supersecretishere'

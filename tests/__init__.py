@@ -53,3 +53,55 @@ class TestHelper():
             headers={
                 **self.headers,
                 'Authorization': 'Bearer {}'.format(token)})
+
+    def create_flight(self, new_flight, token):
+        url = self.base_url + '/api/flight'
+        return self.app.post(
+            url,
+            data=json.dumps(new_flight),
+            headers={
+                **self.headers,
+                "Authorization": 'Bearer {}'.format(token)})
+
+    #Retrieve all the available flights
+    def get_flights(self):
+        url = self.base_url + '/api/flights'
+        return self.app.get(url)
+    
+    #method to get flight by id
+    def get_flight_by_id(self, flight_id):
+        url = self.base_url + '/api/flight/{id}'.format(id=flight_id)
+        return self.app.get(url)
+
+    def update_flight(self, flight_id, update_data, token):
+
+        url = self.base_url + f'/api/flight/{light_id}'
+        return self.app.put(
+            url,
+            data=json.dumps(update_data),
+            headers={
+                **self.headers,
+                'authorization': 'Bearer {}'.format(token)})
+    
+    #method to delete flight
+    def delete_flight(self, flight_id, token):
+        url = self.base_url + '/api/flight/{}'.format(businessid)
+        return self.app.delete(
+            url,
+            headers={
+                **self.headers,
+                'Authorization': 'Bearer {}'.format(token)})
+
+     # Add seat to a flight method
+
+    def create_seat(self, flight_id, new_seat, token):
+        url = urljoin(
+            self.base_url, '/api/{id}/seats'.format(id=str(flight_id)))
+        return self.app.post(
+            url, data=json.dumps(new_seat), headers={
+                **self.headers, 'Authorization': 'Bearer {}'.format(token)})
+
+    def get_all_seats(self, flight_id):
+        url = urljoin(
+            self.base_url, '/api/{id}/seats'.format(id=str(flight_id)))
+        return self.app.get(url)

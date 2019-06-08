@@ -4,11 +4,12 @@ language: python
 python:
   - "3.6"
 
-env: -SQLALCHEMY_DATABASE_URI=sqlite:///test.db
+env: - NOSE_REDNOSE=1
 # command to install dependencies
 install:
   - pip install
   - pip install -r requirements.txt
+  - pip install rednose
   - pip install coveralls
 
 services:

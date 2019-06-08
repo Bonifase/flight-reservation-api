@@ -1,6 +1,7 @@
 from flights import db
 from flask_bcrypt import Bcrypt
 from flights.models.validate_fields import *
+from flights.models.flight import *
 
 from sqlalchemy.ext.hybrid import hybrid_property
 
@@ -11,18 +12,26 @@ class User(db.Model):
     _username = db.Column("username", db.String(80))
     _email = db.Column("email", db.String(120), unique=True)
     _password = db.Column("password", db.String(80))
-    # flights = db.relationship('Flight', backref='owner', lazy='dynamic')
-    # seats = db.relationship('Seat', backref='owner', lazy='dynamic')
+    isAdmin = False
 
     def __init__(self, username=None, email=None, password=None):
         self.username = username
         self.email = email
         self.password = password
+        self.isAdmin = False
 
     def register_user(self):
         """Save a user to the database.
         This includes creating a new user and editing one.
         """
+        db.session.add(self)
+        db.session.commit()
+
+    def make_user_admin(self):
+        """Save a user to the database.
+        This includes creating a new user and editing one.
+        """
+        self.isAdmin = True
         db.session.add(self)
         db.session.commit()
 
@@ -74,3 +83,35 @@ class User(db.Model):
             self._password = Bcrypt().generate_password_hash(value).decode()
             return
         assert 0, 'Invalid password'
+
+# class Booking(db.Model):
+#     """This class defines the bookings table """
+#     __tablename__ = 'bookings'
+#     id = db.Column(db.Integer, primary_key=True)
+#     _username = db.Column("username", db.String(80))
+#     _email = db.Column("email", db.String(120), unique=True)
+#     _password = db.Column("password", db.String(80))
+#     isAdmin = False
+#     flight = db.relationship('Flight', backref='owner', lazy='dynamic')
+#     seats = db.relationship('Seat', backref='owner', lazy='dynamic')
+
+#     def __init__(self, username=None, email=None, password=None):
+#         self.username = username
+#         self.email = email
+#         self.password = password
+#         self.isAdmin = False
+
+#     def register_user(self):
+#         """Save a user to the database.
+#         This includes creating a new user and editing one.
+#         """
+#         db.session.add(self)
+#         db.session.commit()
+
+#     def make_user_admin(self):
+#         """Save a user to the database.
+#         This includes creating a new user and editing one.
+#         """
+#         self.isAdmin = True
+#         db.session.add(self)
+#         db.session.commit()
