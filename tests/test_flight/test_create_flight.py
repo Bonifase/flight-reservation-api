@@ -14,7 +14,6 @@ class TestFlightCase(BaseTestSetUp):
         self.result = self.testHelper.login_user(new_user)
         self.token = json.loads(self.result.data.decode())['AuthToken']
         response = self.testHelper.create_flight(new_flight=new_flight,token=self.token)
-        print("res", response)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "message"], "You created a new flight")
@@ -29,7 +28,6 @@ class TestFlightCase(BaseTestSetUp):
         self.testHelper.create_flight(new_flight=new_flight,token=self.token)
         response = self.testHelper.create_flight(new_flight=new_flight,token=self.token)
         result = json.loads(response.data.decode())
-        print("result", result)
         self.assertIn(result[
             "error"], "Flight already Exist, use another name")
         self.assertEqual(response.status_code, 409)

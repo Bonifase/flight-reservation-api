@@ -85,7 +85,7 @@ class TestHelper():
     
     #method to delete flight
     def delete_flight(self, flight_id, token):
-        url = self.base_url + '/api/flight/{}'.format(businessid)
+        url = self.base_url + '/api/flight/{}'.format(flight_id)
         return self.app.delete(
             url,
             headers={
@@ -105,3 +105,20 @@ class TestHelper():
         url = urljoin(
             self.base_url, '/api/{id}/seats'.format(id=str(flight_id)))
         return self.app.get(url)
+
+    def book_flight(self, booking, token):
+        url = self.base_url + '/api/booking'
+        return self.app.post(
+            url,
+            data=json.dumps(booking),
+            headers={
+                **self.headers,
+                "Authorization": 'Bearer {}'.format(token)})
+    
+    def get_user_bookings(self,token):
+        url = self.base_url + '/api/booking'
+        return self.app.get(
+            url,
+            headers={
+                **self.headers,
+                "Authorization": 'Bearer {}'.format(token)})
