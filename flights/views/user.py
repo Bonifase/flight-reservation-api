@@ -43,7 +43,8 @@ def register():
                 user = User(
                     validated_data['username'],
                     validated_data['email'], 
-                    validated_data['password'])
+                    validated_data['password'],
+                    bool(data.get('isAdmin')))
                 user.register_user()
             except AssertionError as err:
                 return jsonify({'message': err.args[0]}), 409

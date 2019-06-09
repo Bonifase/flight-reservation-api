@@ -1,7 +1,12 @@
 new_user = dict(
     username="Bill",
     email="Bill@gmail.com",
-    password="bill124")
+    password="bill124",
+    isAdmin="True")
+regular_user = dict(
+    username="regular",
+    email="regular@gmail.com",
+    password="regulart124")
 duplicate_user = dict(
     username="Bill",
     email="Bill@gmail.com",

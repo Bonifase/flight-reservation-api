@@ -21,6 +21,13 @@ class Flight(db.Model):
         self.departure = departure
         self.arrival = arrival
         self.destination  = destination 
+    
+    def update_flight(self, data):
+        for key in data.keys():
+            value = data[key]
+            setattr(self, key, value)
+            db.session.add(self)
+            db.session.commit()
 
     """method that saves the flight to the database"""
     def save_flight(self):

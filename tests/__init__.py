@@ -53,7 +53,8 @@ class TestHelper():
             headers={
                 **self.headers,
                 'Authorization': 'Bearer {}'.format(token)})
-
+    
+    # create flight
     def create_flight(self, new_flight, token):
         url = self.base_url + '/api/flight'
         return self.app.post(
@@ -75,7 +76,7 @@ class TestHelper():
 
     def update_flight(self, flight_id, update_data, token):
 
-        url = self.base_url + f'/api/flight/{light_id}'
+        url = self.base_url + f'/api/flight/{flight_id}'
         return self.app.put(
             url,
             data=json.dumps(update_data),
@@ -92,8 +93,7 @@ class TestHelper():
                 **self.headers,
                 'Authorization': 'Bearer {}'.format(token)})
 
-     # Add seat to a flight method
-
+    # Add seat to a flight method
     def create_seat(self, flight_id, new_seat, token):
         url = urljoin(
             self.base_url, '/api/{id}/seats'.format(id=str(flight_id)))
