@@ -73,8 +73,4 @@ def get_bookings():
             'payment': booking.payment,
             'date_booked': booking.date_booked,
             'user_id': user} for booking in bookings if booking.user_id == user]
-    if user_bookings == [{}]:
-        return jsonify({
-            "message": "No bookings made by this user"}), 404
-    else:
-        return jsonify({"bookings": user_bookings}), 200
+    return jsonify({"bookings": user_bookings}), 200

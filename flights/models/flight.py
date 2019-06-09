@@ -110,11 +110,6 @@ class Seat(db.Model):
             db.session.add(self)
             db.session.commit()
 
-    @staticmethod
-    def seats():
-        seats = Seat.query.all()
-        return seats
-
     def save_seat(self):
         db.session.add(self)
         db.session.commit()
@@ -123,20 +118,11 @@ class Seat(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def book_seat(self):
-        Seat.booked = True
-        db.session.add(self)
-        db.session.commit()
-
-
     @hybrid_property
     def number(self):
         return self._number
 
     @number.setter
     def number(self, value):      
-        match = number_pattern(value)
-        if match:
-            self._number = value
-            return
-        assert 0, 'Invalid number'  
+        self._number = value
+  

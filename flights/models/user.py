@@ -27,15 +27,6 @@ class User(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def make_user_admin(self):
-        """Save a user to the database.
-        This includes creating a new user and editing one.
-        """
-        self.isAdmin = True
-        db.session.add(self)
-        db.session.commit()
-
-    
     @hybrid_property
     def username(self):
         """defines username attribute for user object"""

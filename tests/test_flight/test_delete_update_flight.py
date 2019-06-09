@@ -57,7 +57,6 @@ class TestFlightCase(BaseTestSetUp):
         self.token = json.loads(self.result.data.decode())['AuthToken']
         self.testHelper.create_flight(new_flight=new_flight,token=self.token)
         response = self.testHelper.update_flight(flight_id=1, update_data=update_flight,token=self.token)
-        print(response)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "message"], "Flight updated")
@@ -98,7 +97,8 @@ class TestFlightCase(BaseTestSetUp):
         self.testHelper.add_user(new_user)
         self.result = self.testHelper.login_user(new_user)
         self.token = json.loads(self.result.data.decode())['AuthToken']
-        response = self.testHelper.create_flight(new_flight=missing_name,token=self.token)
+        self.testHelper.create_flight(new_flight=new_flight,token=self.token)
+        response = self.testHelper.update_flight(flight_id=1, update_data=missing_name,token=self.token)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "error"], "name is required field")
@@ -110,7 +110,8 @@ class TestFlightCase(BaseTestSetUp):
         self.testHelper.add_user(new_user)
         self.result = self.testHelper.login_user(new_user)
         self.token = json.loads(self.result.data.decode())['AuthToken']
-        response = self.testHelper.create_flight(new_flight=missing_departure,token=self.token)
+        self.testHelper.create_flight(new_flight=new_flight,token=self.token)
+        response = self.testHelper.update_flight(flight_id=1, update_data=missing_departure,token=self.token)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "error"], "departure is required field")
@@ -122,7 +123,8 @@ class TestFlightCase(BaseTestSetUp):
         self.testHelper.add_user(new_user)
         self.result = self.testHelper.login_user(new_user)
         self.token = json.loads(self.result.data.decode())['AuthToken']
-        response = self.testHelper.create_flight(new_flight=missing_arrival,token=self.token)
+        self.testHelper.create_flight(new_flight=new_flight,token=self.token)
+        response = self.testHelper.update_flight(flight_id=1, update_data=missing_arrival,token=self.token)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "error"], "arrival is required field")
@@ -134,34 +136,11 @@ class TestFlightCase(BaseTestSetUp):
         self.testHelper.add_user(new_user)
         self.result = self.testHelper.login_user(new_user)
         self.token = json.loads(self.result.data.decode())['AuthToken']
-        response = self.testHelper.create_flight(new_flight=missing_destination,token=self.token)
+        self.testHelper.create_flight(new_flight=new_flight,token=self.token)
+        response = self.testHelper.update_flight(flight_id=1, update_data=missing_destination,token=self.token)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "error"], "destination is required field")
-        self.assertEqual(response.status_code, 409)
-
-    def test_user_cannot_update_flight_with_invalid_name(self):
-        """Test API cannot update flight with invalid name (PUT request)"""
-
-        self.testHelper.add_user(new_user)
-        self.result = self.testHelper.login_user(new_user)
-        self.token = json.loads(self.result.data.decode())['AuthToken']
-        response = self.testHelper.create_flight(new_flight=invalid_name,token=self.token)
-        result = json.loads(response.data.decode())
-        self.assertIn(result[
-            "error"], "Invalid name")
-        self.assertEqual(response.status_code, 409)
-
-    def test_user_cannot_update_flight_with_invalid_destination(self):
-        """Test API cannot update flight with invalid destination(PUT request)"""
-
-        self.testHelper.add_user(new_user)
-        self.result = self.testHelper.login_user(new_user)
-        self.token = json.loads(self.result.data.decode())['AuthToken']
-        response = self.testHelper.create_flight(new_flight=invalid_destination,token=self.token)
-        result = json.loads(response.data.decode())
-        self.assertIn(result[
-            "error"], "Invalid destination")
         self.assertEqual(response.status_code, 409)
 
     def test_user_cannot_update_flight_with_name_key_missing(self):
@@ -170,7 +149,8 @@ class TestFlightCase(BaseTestSetUp):
         self.testHelper.add_user(new_user)
         self.result = self.testHelper.login_user(new_user)
         self.token = json.loads(self.result.data.decode())['AuthToken']
-        response = self.testHelper.create_flight(new_flight=missing_name_key,token=self.token)
+        self.testHelper.create_flight(new_flight=new_flight,token=self.token)
+        response = self.testHelper.update_flight(flight_id=1, update_data=missing_name_key,token=self.token)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "error"], "name key is missing")
@@ -182,7 +162,8 @@ class TestFlightCase(BaseTestSetUp):
         self.testHelper.add_user(new_user)
         self.result = self.testHelper.login_user(new_user)
         self.token = json.loads(self.result.data.decode())['AuthToken']
-        response = self.testHelper.create_flight(new_flight=missing_departure_key,token=self.token)
+        self.testHelper.create_flight(new_flight=new_flight,token=self.token)
+        response = self.testHelper.update_flight(flight_id=1, update_data=missing_departure_key,token=self.token)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "error"], "departure key is missing")
@@ -194,7 +175,8 @@ class TestFlightCase(BaseTestSetUp):
         self.testHelper.add_user(new_user)
         self.result = self.testHelper.login_user(new_user)
         self.token = json.loads(self.result.data.decode())['AuthToken']
-        response = self.testHelper.create_flight(new_flight=missing_arrival_key,token=self.token)
+        self.testHelper.create_flight(new_flight=new_flight,token=self.token)
+        response = self.testHelper.update_flight(flight_id=1, update_data=missing_arrival_key,token=self.token)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "error"], "arrival key is missing")
@@ -206,7 +188,8 @@ class TestFlightCase(BaseTestSetUp):
         self.testHelper.add_user(new_user)
         self.result = self.testHelper.login_user(new_user)
         self.token = json.loads(self.result.data.decode())['AuthToken']
-        response = self.testHelper.create_flight(new_flight=missing_destination_key,token=self.token)
+        self.testHelper.create_flight(new_flight=new_flight,token=self.token)
+        response = self.testHelper.update_flight(flight_id=1, update_data=missing_destination_key,token=self.token)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "error"], "destination key is missing")
