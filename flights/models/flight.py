@@ -62,11 +62,7 @@ class Flight(db.Model):
 
     @departure.setter
     def departure(self, value):       
-        match = True
-        if match:
-            self._departure = value
-            return
-        assert 0, 'Invalid times'
+        self._departure = value
 
     @hybrid_property
     def arrival(self):
@@ -74,11 +70,8 @@ class Flight(db.Model):
 
     @arrival.setter
     def arrival(self, value):      
-        match = True
-        if match:
-            self._arrival = value
-            return
-        assert 0, 'Invalid time'
+        self._arrival = value
+            
 
     @hybrid_property
     def destination(self):
@@ -108,6 +101,14 @@ class Seat(db.Model):
         self._number = number
         self.booked = False
         self.flight_id = flight_id
+    
+    def update_seat(self, data):
+        print(data)
+        for key in data.keys():
+            value = data[key]
+            setattr(self, key, value)
+            db.session.add(self)
+            db.session.commit()
 
     @staticmethod
     def seats():
@@ -116,6 +117,10 @@ class Seat(db.Model):
 
     def save_seat(self):
         db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
         db.session.commit()
 
     def book_seat(self):
