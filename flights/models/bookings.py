@@ -25,12 +25,3 @@ class Booking(db.Model):
     def save_booking(self):
         db.session.add(self)
         db.session.commit()
-
-    @staticmethod
-    def get_bookings():
-        flights = Flight.query.all()
-        return flights
-
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()

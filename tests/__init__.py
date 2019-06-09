@@ -100,6 +100,24 @@ class TestHelper():
         return self.app.post(
             url, data=json.dumps(new_seat), headers={
                 **self.headers, 'Authorization': 'Bearer {}'.format(token)})
+    
+    def update_seat(self, flight_id, seat_id, new_seat,  token):
+        url = urljoin(
+            self.base_url, '/api/{id}/seats/{seat_id}'.format(
+                id=str(flight_id), seat_id=str(seat_id)))
+        return self.app.put(
+            url, data=json.dumps(new_seat), headers={
+                **self.headers, 'Authorization': 'Bearer {}'.format(token)})
+
+    def delete_seat(self, flight_id, seat_id, token):
+        url = url = urljoin(
+            self.base_url, '/api/{id}/seats/{seat_id}'.format(
+                id=str(flight_id), seat_id=str(seat_id)))
+        return self.app.delete(
+            url,
+            headers={
+                **self.headers,
+                'Authorization': 'Bearer {}'.format(token)})
 
     def get_all_seats(self, flight_id):
         url = urljoin(

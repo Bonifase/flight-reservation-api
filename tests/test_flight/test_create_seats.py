@@ -40,7 +40,7 @@ class TestFlightCase(BaseTestSetUp):
             flight_id=1)
         result = json.loads(response.data.decode())
         self.assertIn(result[
-            "error"], "That seat number has been added")
+            "error"], "That seat number has been added to this flight")
         self.assertEqual(response.status_code, 409)
 
     

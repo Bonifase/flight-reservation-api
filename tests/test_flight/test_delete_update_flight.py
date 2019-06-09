@@ -57,6 +57,7 @@ class TestFlightCase(BaseTestSetUp):
         self.token = json.loads(self.result.data.decode())['AuthToken']
         self.testHelper.create_flight(new_flight=new_flight,token=self.token)
         response = self.testHelper.update_flight(flight_id=1, update_data=update_flight,token=self.token)
+        print(response)
         result = json.loads(response.data.decode())
         self.assertIn(result[
             "message"], "Flight updated")
@@ -208,5 +209,5 @@ class TestFlightCase(BaseTestSetUp):
         response = self.testHelper.create_flight(new_flight=missing_destination_key,token=self.token)
         result = json.loads(response.data.decode())
         self.assertIn(result[
-            "error"], 'destination key is missing')
+            "error"], "destination key is missing")
         self.assertEqual(response.status_code, 409)

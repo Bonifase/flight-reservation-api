@@ -3,6 +3,7 @@ new_flight = dict(
                 departure="2015-05-12 13:30:00+00",
                 arrival="2015-05-12 13:30:00+00",
                 destination="Dallas")
+                
 another_flight = dict(
                 name="Boeng",
                 departure="2015-05-12 13:30:00+00",
@@ -77,6 +78,7 @@ update_flight = dict(
                 destination="Dallas")
 
 new_seat = dict(number=1)
+update_seat = dict(number=2)
 
 missing_number = dict(number="")
 
