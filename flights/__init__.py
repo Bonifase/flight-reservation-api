@@ -9,6 +9,7 @@ db = SQLAlchemy(app)
 
 from flights.views.flights import *  # noqa
 from flights.views.user import *  # noqa
+from flights.views.bookings import *  # noqa
 
 app.config['JWT_SECRET_KEY'] = 'supersecretishere'
 app.config['JWT_BLACKLIST_ENABLED'] = True
