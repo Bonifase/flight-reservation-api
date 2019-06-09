@@ -4,7 +4,8 @@ language: python
 python:
   - "3.6"
 
-env: - NOSE_REDNOSE=1
+env:
+  - NOSE_REDNOSE=1
 # command to install dependencies
 install:
   - pip install

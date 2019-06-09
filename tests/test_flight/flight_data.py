@@ -70,6 +70,12 @@ missing_destination_key = dict(
                 departure="2015-05-12 13:30:00+00",
                 arrival="2015-05-12 13:30:00+00")
 
+update_flight = dict(
+                name="Flight No 1",
+                departure="2015-05-12 14:30:00+00",
+                arrival="2015-05-12 23:30:00+00",
+                destination="Dallas")
+
 new_seat = dict(number=1)
 
 missing_number = dict(number="")
