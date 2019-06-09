@@ -104,10 +104,7 @@ def view_flights():
         'Departure' : "{:%Y-%m-%d %H:%M}".format(flight.departure),
         'arrival': "{:%Y-%m-%d %H:%M}".format(flight.arrival),
         'destination': flight.destination} for flight in Flight.get_flights()]
-    if flights == [{}]:
-        return jsonify({"message": "No Flight Entry"}), 404
-    else:
-        return jsonify({"flights": flights}), 200
+    return jsonify({"flights": flights}), 200
 
 @app.route('/api/<int:flight_id>/seats', methods=['POST'])
 @jwt_required
@@ -122,9 +119,10 @@ def create_seat(flight_id):
         target_flight = Flight.query.filter_by(id=flight_id).first()
         if target_flight:
             number = cleaned_data.get('number') + target_flight.name[:2].upper()
-            existing_seat = Seat.query.filter_by(number=number).first()
-            if existing_seat:
-                return jsonify({'error': "That seat number has been added"}), 409
+            existing_seats = Seat.query.filter_by(number=number).all()
+            for seat in existing_seats:
+                if seat.flight_id == flight_id:
+                    return jsonify({'error': "That seat number has been added"}), 409
             seat = Seat(number, flight_id, booked=False)
             seat.save_seat()
             return jsonify({"message": "Seat added Successfully"}), 201
@@ -132,16 +130,64 @@ def create_seat(flight_id):
             return jsonify({
                 "message": "Flight with that ID does not exist"}), 404
 
+@app.route('/api/<int:flight_id>/seats/<int:seat_id>', methods=['PUT'])
+@jwt_required
+def update_seat(flight_id, seat_id):
+    user = get_jwt_identity()
+    try:
+        check_admin_user(user)
+    except AssertionError as error:
+        return jsonify({'error': error.args[0]}), 403
+    data = request.get_json()
+    seat = {'number' : data.get('number')}
+    try:
+        cleaned_data = validate_data(**seat)
+    except AssertionError as error:
+        return jsonify({'error': error.args[0]}), 409
+    
+    if cleaned_data:
+        exact_flight = Flight.query.filter_by(id=flight_id).first()
+        if exact_flight:
+            exact_seat = Seat.query.filter_by(id=seat_id).first()
+            if not exact_seat:
+                return jsonify({"error": "Seat not available" }), 404
+            if exact_flight.id == exact_seat.flight_id:
+                number = cleaned_data.get('number') + exact_flight.name[:2].upper()
+                new_seat = {'number': number}
+                exact_seat.update_seat(new_seat)
+                return jsonify({"message": "Seat updated"}), 200
+            else:
+                return jsonify({"error": "Seat not assigned to this flight" }), 404
+        else:
+            return jsonify({"error": "Flight not available" }), 404
+
+@app.route('/api/<int:flight_id>/seats/<int:seat_id>', methods=['DELETE'])
+@jwt_required
+def delete_seat(flight_id, seat_id):
+    user = get_jwt_identity()
+    try:
+        check_admin_user(user)
+    except AssertionError as error:
+        return jsonify({'error': error.args[0]}), 403
+    exact_flight = Flight.query.filter_by(id=flight_id).first()
+    if exact_flight:
+        exact_seat = Seat.query.filter_by(id=seat_id).first()
+        if not exact_seat:
+            return jsonify({"error": "Seat not available" }), 404
+        if exact_flight.id == exact_seat.flight_id:
+            exact_seat.delete()
+            return jsonify({"message": "Seat deleted"}), 200
+        else:
+            return jsonify({"error": "Seat not assigned to this flight" }), 404
+    else:
+        return jsonify({"error": "Flight not available" }), 404
+
 @app.route('/api/<int:flight_id>/seats', methods=['GET'])
 def get_seats(flight_id):
     seats = Seat.query.all()
-    target_seats = [
+    flight_seats = [
         {"_id": seat.id,
             "flight_id": seat.flight_id,
             "booked": seat.booked,
             "number": seat.number} for seat in seats if seat.flight_id == flight_id]
-    if target_seats == [{}]:
-        return jsonify({
-            "message": "No Seats available for that Flight"}), 404
-    else:
-        return jsonify({"seats": target_seats}), 200
+    return jsonify({"seats": flight_seats}), 200

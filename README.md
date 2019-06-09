@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Bonifase/flight-reservation-api.svg?branch=develop)](https://travis-ci.org/Bonifase/flight-reservation-api) [![Coverage Status](https://coveralls.io/repos/github/Bonifase/flight-reservation-api/badge.svg?branch=develop)](https://coveralls.io/github/Bonifase/flight-reservation-api?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/6aff2c80302fc35d4afa/maintainability)](https://codeclimate.com/github/Bonifase/flight-reservation-api/maintainability)
+[![Build Status](https://travis-ci.org/Bonifase/flight-reservation-api.svg?branch=develop)](https://travis-ci.org/Bonifase/flight-reservation-api) [[![Coverage Status](https://coveralls.io/repos/github/Bonifase/flight-reservation-api/badge.svg?branch=develop)](https://coveralls.io/github/Bonifase/flight-reservation-api?branch=develop)[![Maintainability](https://api.codeclimate.com/v1/badges/6aff2c80302fc35d4afa/maintainability)](https://codeclimate.com/github/Bonifase/flight-reservation-api/maintainability)
 
 <!-- ABOUT THE PROJECT -->
 
