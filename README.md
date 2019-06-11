@@ -19,7 +19,7 @@ Main stack and major frameworks used in this project.
 
 ## Getting Started
 
-Lets look at what we need to get started
+Lets look at what we need to get started now
 
 ### Prerequisites
 
