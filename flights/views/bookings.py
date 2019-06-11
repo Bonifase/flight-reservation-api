@@ -7,6 +7,7 @@ from flights.models.flight import Flight, Seat
 from flights.models.bookings import Booking
 from validators.validator import validate_data
 from helpers.check_existing_booking import check_available_slot
+from helpers.check_admin_user import *
 
 
 @app.route('/api/booking', methods=['POST'])
@@ -23,14 +24,9 @@ def create_booking():
         cleaned_data = validate_data(**booking)
     except AssertionError as error:
         return jsonify({'error': error.args[0]}), 409
-    
     if cleaned_data:
-        exact_flight = Flight.query.filter_by(
-            name=data['flight_name']).first()
-        exact_seat = Seat.query.filter_by(
-        number=data['seat_number']).first()
         try:
-            check_available_slot(user, cleaned_data, exact_flight, exact_seat)
+            flight, seat = check_available_slot(user, cleaned_data)
         except AssertionError as error:
             return jsonify({'error': error.args[0]}), 409
         booking = Booking(
@@ -41,8 +37,8 @@ def create_booking():
             date_booked=datetime.datetime.now()
             )
         booking.save_booking()
-        exact_seat.booked = True
-        exact_seat.save_seat()
+        seat.booked = True
+        seat.save_seat()
     
         response = {
                 '_id': booking.id,
@@ -50,8 +46,8 @@ def create_booking():
                 'seat': booking.seat_number,
                 'payment': booking.payment,
                 'date_booked': booking.date_booked,
-                'departure': exact_flight.departure,
-                'destination': exact_flight.destination,
+                'departure': flight.departure,
+                'destination': flight.destination,
                 'user_id': user,
                 }
 
@@ -74,3 +70,25 @@ def get_bookings():
             'date_booked': booking.date_booked,
             'user_id': user} for booking in bookings if booking.user_id == user]
     return jsonify({"bookings": user_bookings}), 200
+
+@app.route('/api/bookings/<int:flight_id>', methods=['GET'])
+@jwt_required
+def get_flight_bookings(flight_id):
+    user_id = get_jwt_identity()
+    user = get_user(user_id)
+    try:
+        flight = get_flight(flight_id)
+    except AssertionError as error:
+        return jsonify({'error': error.args[0]}), 404
+    bookings = Booking.query.all()
+    user_bookings = [
+        {
+            '_id': booking.id,
+            'flight': booking.flight_name,
+            'seat': booking.seat_number,
+            'payment': booking.payment,
+            'departure': flight.departure,
+            'arrival': flight.arrival,
+            'destination': flight.destination,
+            'user': user.username} for booking in bookings if booking.flight_name == flight.name]
+    return jsonify({"flight_bookings": user_bookings}), 200
