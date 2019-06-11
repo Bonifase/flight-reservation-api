@@ -13,7 +13,6 @@ def email_pattern(value):
 
 def password_pattern(value):
     """A method that checks password patterns"""
-    
     pattern = r'[a-zA-Z0-9_@&\.]{6,20}'
     match = re.search(pattern, value)
     return match

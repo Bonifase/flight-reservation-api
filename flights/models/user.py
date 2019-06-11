@@ -12,12 +12,15 @@ class User(db.Model):
     _username = db.Column("username", db.String(80))
     _email = db.Column("email", db.String(120), unique=True)
     _password = db.Column("password", db.String(80))
+    _passport = db.Column("passport", db.String(80))
     _isAdmin = db.Column("isAdmin", db.Boolean)
 
-    def __init__(self, username=None, email=None, password=None, isAdmin=None):
+    def __init__(self, username=None, email=None, password=None, passport=None,
+    isAdmin=None):
         self.username = username
         self.email = email
         self.password = password
+        self.passport = passport
         self.isAdmin = isAdmin
 
     def register_user(self):
@@ -50,13 +53,11 @@ class User(db.Model):
     def isAdmin(self, value):
         self._isAdmin = value
             
-    
     @hybrid_property
     def email(self):
         """defines an email attribute for user object"""
         return self._email
 
-   
     @email.setter
     def email(self, value):
         """validates with predefined patterns and sets 
@@ -66,14 +67,12 @@ class User(db.Model):
             self._email = value
             return
         assert 0, 'Invalid email'
-
-    
+ 
     @hybrid_property
     def password(self):
         """defines password attribute for user object"""
         return self._password
 
-    
     @password.setter
     def password(self, value):
         """validates with predefined patterns and sets 
@@ -83,3 +82,13 @@ class User(db.Model):
             self._password = Bcrypt().generate_password_hash(value).decode()
             return
         assert 0, 'Invalid password'
+    
+    @hybrid_property
+    def passport(self):
+        """defines passport attribute for user object"""
+        return self._passport
+
+    @passport.setter
+    def passport(self, value):
+        self._passport = value
+    
