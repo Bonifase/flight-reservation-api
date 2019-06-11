@@ -103,7 +103,6 @@ class Seat(db.Model):
         self.flight_id = flight_id
     
     def update_seat(self, data):
-        print(data)
         for key in data.keys():
             value = data[key]
             setattr(self, key, value)

@@ -6,7 +6,7 @@ from tests.test_users.data_source import *
 from tests.test_bookings.bookings_data import *
 
 
-class TestFlightCase(BaseTestSetUp):
+class TestBookingCase(BaseTestSetUp):
 
     def test_user_can_book_flight(self):
         """Test API can book flight (POST request)"""
@@ -179,7 +179,7 @@ class TestFlightCase(BaseTestSetUp):
             booking=new_booking,token=self.token)
         result = json.loads(response.data.decode())
         self.assertIn(result[
-            "error"], "Seat number does not exist")
+            "error"], "Seat number does not belong to this flight")
         self.assertEqual(response.status_code, 409)
     
     def test_user_cannot_book_different_flight_seat(self):
@@ -206,7 +206,7 @@ class TestFlightCase(BaseTestSetUp):
         self.assertEqual(response.status_code, 409)
 
     def test_user_can_get_all_bookings(self):
-        """Test API get all bookings (POST request)"""
+        """Test API get all bookings (GET request)"""
 
         self.testHelper.add_user(new_user)
         self.result = self.testHelper.login_user(new_user)
@@ -223,7 +223,7 @@ class TestFlightCase(BaseTestSetUp):
         self.assertEqual(response.status_code, 200)
 
     def test_user_get_empty_list_when_no_bookings_found(self):
-        """Test API returns empty list when no bookings found (POST request)"""
+        """Test API returns empty list when no bookings found (GET request)"""
 
         self.testHelper.add_user(new_user)
         self.result = self.testHelper.login_user(new_user)
