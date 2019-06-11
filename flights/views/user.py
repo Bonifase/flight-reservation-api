@@ -7,6 +7,7 @@ from flask_jwt_extended import (
 from flask_bcrypt import Bcrypt
 from flights.models.user import User
 from validators.validator import validate_data
+from helpers.upload_passport import save_file
 
 jwt = JWTManager(app)
 
@@ -40,10 +41,12 @@ def register():
                 "message": "User already exists. Please login"}), 409
         else:
             try:
+                save_file(data.get('passport'))
                 user = User(
                     validated_data['username'],
                     validated_data['email'], 
                     validated_data['password'],
+                    data.get('passport'),
                     bool(data.get('isAdmin')))
                 user.register_user()
             except AssertionError as err:
