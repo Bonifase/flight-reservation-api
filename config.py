@@ -6,7 +6,7 @@ class Config(object):
     DEBUG = False
     CSRF_ENABLED = True
     SECRET_KEY = os.getenv('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     """Development env settings"""
@@ -15,12 +15,12 @@ class Config(object):
 class DevelopmentConfig(Config):
     """Configurations for Development."""
     DEBUG = True
-
-
+    
+    
 class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URL')
     DEBUG = True
 
 
