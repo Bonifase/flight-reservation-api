@@ -140,3 +140,10 @@ class TestHelper():
             headers={
                 **self.headers,
                 "Authorization": 'Bearer {}'.format(token)})
+    def get_flight_bookings(self,token, flight_id):
+        url = self.base_url + '/api/bookings/{}'.format(str(flight_id))
+        return self.app.get(
+            url,
+            headers={
+                **self.headers,
+                "Authorization": 'Bearer {}'.format(token)})
