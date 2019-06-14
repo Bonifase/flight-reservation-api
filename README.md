@@ -21,6 +21,24 @@ Main stack and major frameworks used in this project.
 
 Lets look at what we need to get started now
 
+## API endpoints
+
+#### See the API documentaion [here](https://web.postman.co/collections/4175392-ff45c916-b1fc-4a94-9034-4733f9dd04d3?version=latest&workspace=16c98f63-155f-41f9-8895-523531f8619c#1ab35c18-1847-4e5a-85ed-98300c490082)
+
+| Endpoint                                                                  | Method | Description              |
+| ------------------------------------------------------------------------- | ------ | ------------------------ |
+| `https://book-flight.herokuapp.com/api/register`                          | POST   | Register users           |
+| `https://book-flight.herokuapp.com/api/login`                             | POST   | Login users with JWT     |
+| `https://book-flight.herokuapp.com/api/logout`                            | POST   | Logout users with JWT    |
+| `https://book-flight.herokuapp.com/api/flight`                            | POST   | Add new flight           |
+| `https://book-flight.herokuapp.com/api/flights`                           | GET    | Get all flights          |
+| `https://book-flight.herokuapp.com/api/flight/<flight_id>`                | GET    | Get one flights          |
+| `https://book-flight.herokuapp.com/api/flight/<flight_id>/seat`           | POST   | Add seat                 |
+| `https://book-flight.herokuapp.com/api/flight/<flight_id>/seat/<seat_id>` | GET    | Get one seat in a flight |
+| `https://book-flight.herokuapp.com/api/booking`                           | POST   | Book flight              |
+| `https://book-flight.herokuapp.com/api/bookings`                          | GET    | Get all bookins          |
+| `https://book-flight.herokuapp.com/api/bookings/<flight_id>`              | GET    | Get all users bookings   |
+
 ### Prerequisites
 
 Use pip to install all the project dependancies.

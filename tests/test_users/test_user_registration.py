@@ -40,7 +40,7 @@ class TestUserCase(BaseTestSetUp):
         response = self.testHelper.add_user(user_missing_email)
         result = json.loads(response.data.decode())
         self.assertEqual(result[
-            "message"], "email is required field")
+            "message"], 'email is required field')
         self.assertEqual(response.status_code, 409)
 
     def test_user_cannot_register_with_blank_password(self):

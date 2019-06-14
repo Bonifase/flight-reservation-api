@@ -1,5 +1,5 @@
 from flights import app
-from flask import request, jsonify
+from flask import request, jsonify, render_template
 from flask_jwt_extended import (jwt_required, get_jwt_identity,
     create_access_token,  decode_token, get_raw_jwt
 )
@@ -7,7 +7,11 @@ from flask_jwt_extended import (jwt_required, get_jwt_identity,
 from flights.models.flight import Flight, Seat
 from validators.validator import validate_data
 from helpers.check_admin_user import check_admin_user
+from helpers.send_email import send_email
 
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route('/api/flight', methods=['POST'])
 @jwt_required
