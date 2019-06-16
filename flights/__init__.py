@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from config import app_config
 
@@ -21,4 +22,5 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+CORS(app)
 
