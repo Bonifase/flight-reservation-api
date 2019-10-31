@@ -93,15 +93,13 @@ class Seat(db.Model):
     __tablename__ = 'seats'
 
     id = db.Column(db.Integer, primary_key=True)
-    _number = db.Column("number", db.String(80))
+    number = db.Column("number", db.String(80))
     booked = db.Column("booked", db.Boolean(), default=False)
     flight_id = db.Column(db.Integer, db.ForeignKey('flights.id', ondelete="CASCADE", onupdate="CASCADE"))
 
-    def __init__(self, number, flight_id, booked):
-        self._number = number
-        self.booked = False
-        self.flight_id = flight_id
-    
+    def __str__(self):
+        return self.number
+
     def update_seat(self, data):
         for key in data.keys():
             value = data[key]
@@ -116,12 +114,4 @@ class Seat(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-
-    @hybrid_property
-    def number(self):
-        return self._number
-
-    @number.setter
-    def number(self, value):      
-        self._number = value
   
