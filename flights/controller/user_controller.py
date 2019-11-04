@@ -46,7 +46,7 @@ class UserController:
                             validated_data['password'],
                             data.get('passport'),
                             bool(data.get('isAdmin')))
-                        user.register_user()
+                        user.save_item()
                     except AssertionError as err:
                         return jsonify({'message': err.args[0]}), 409
                 return jsonify({

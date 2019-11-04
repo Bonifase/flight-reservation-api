@@ -2,6 +2,7 @@ from flights import db
 from flask_bcrypt import Bcrypt
 from flights.models.validate_fields import *
 from flights.models.flight import *
+from helpers.create_object import *
 
 from sqlalchemy.ext.hybrid import hybrid_property
 
@@ -23,12 +24,8 @@ class User(db.Model):
         self.passport = passport
         self.isAdmin = isAdmin
 
-    def register_user(self):
-        """Save a user to the database.
-        This includes creating a new user and editing one.
-        """
-        db.session.add(self)
-        db.session.commit()
+    def save_item(self):
+        return create_object(self, db)
 
     @hybrid_property
     def username(self):
