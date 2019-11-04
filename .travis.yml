@@ -1,0 +1,29 @@
+#lanuage
+language: python
+#version
+python:
+  - "3.6"
+
+env:
+  - NOSE_REDNOSE=1
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install rednose
+  - pip install coveralls
+
+services:
+  - postgresql
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - psql -c 'create database test_db' -U postgres
+
+# command to run tests
+script:
+  - nosetests --exe -v --with-coverage --cover-package=flights
+  - ./cc-test-reporter before-build
+
+after_success:
+  - coveralls
+  - codeclimate-test-reporter < ./coverage/lcov.info
