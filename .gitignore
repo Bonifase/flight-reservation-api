@@ -1,4 +1,6 @@
-env
+venv
 .env
 *.pyc
 *__pycache__
+test.db
+.vscode
